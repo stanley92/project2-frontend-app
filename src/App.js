@@ -1,7 +1,28 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./logo.svg";
 
 function App() {
+  const [message, setMessage] = useState("Default Message");
+  useEffect(() => {
+    axios
+      .get("https://cyan-faithful-bream.cyclic.app/home")
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        setMessage(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        setMessage("Errorrr");
+      })
+      .finally(function () {
+        // always executed
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +36,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          My very first change
+          {message}
         </a>
       </header>
     </div>
